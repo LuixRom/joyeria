@@ -1,6 +1,7 @@
 package com.example.sofilove.CarritoItem.domain;
 
 import com.example.sofilove.Carrito.domain.Carrito;
+import com.example.sofilove.Pedido.domain.Pedido;
 import com.example.sofilove.Product.domain.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,15 +21,11 @@ public class CarritoItem {
     @ManyToOne
     private Product product;
 
+    @ManyToOne
+    private Pedido pedido;
+
     private Integer cantidad = 1; // Cantidad de este producto en el carrito
 
     private Double subtotal;
 
-    @PrePersist
-    @PreUpdate
-    private void calcularSubtotal() {
-        if (cantidad != null && product != null && product.getPrice() != null) {
-            this.subtotal = cantidad * product.getPrice();
-        }
-    }
 }

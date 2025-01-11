@@ -1,7 +1,6 @@
 package com.example.sofilove.Product.dto;
 
 import com.example.sofilove.Category.domain.Category;
-import com.example.sofilove.Discount.domain.Discount;
 import com.example.sofilove.Review.domain.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -22,13 +21,7 @@ public class ProductResponseDto {
     private Double price;
     private Integer stock;
     private List<String> imagenes;
-    private List<String> beneficios;
-    private List<String> contenidos;
-    private List<String> caracteristicas;
     private String categoryName;
-    private List<String> discountNames;
-    private List<String> reviewComments;
-    private LocalDateTime fechaCreacion;
-    private LocalDateTime fechaActualizacion;
+    private Integer descuento;
 }
 

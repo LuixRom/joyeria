@@ -14,8 +14,7 @@ public class ProductRequestDto {
     private Double price;
     private Integer stock;
     private Long categoryId;
+    private Boolean isDiscount;
+    private Integer descuento;
     private List<String> imagenes;
-    private List<String> beneficios;
-    private List<String> contenidos;
-    private List<String> caracteristicas;
 }

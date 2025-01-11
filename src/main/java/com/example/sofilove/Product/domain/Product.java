@@ -1,7 +1,6 @@
 package com.example.sofilove.Product.domain;
 
 import com.example.sofilove.Category.domain.Category;
-import com.example.sofilove.Discount.domain.Discount;
 import com.example.sofilove.Review.domain.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -45,23 +44,12 @@ public class Product {
     @ElementCollection
     private List<String> imagenes; // Nombre o clave del archivo en S3
 
-    @Size(min = 1, message = "Debe contener al menos un beneficio")
-    @ElementCollection
-    private List<String> beneficios;
-
-    @Size(min = 1, message = "Debe contener al menos un contenido")
-    @ElementCollection
-    private List<String> contenidos;
-
-    @Size(min = 1, message = "Debe contener al menos una imagen")
-    @ElementCollection
-    private List<String> caracteristicas;
-
     @ManyToOne
     private Category category;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Discount> discounts;
+    private Boolean isDiscount;
+
+    private Integer descuento;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews;
