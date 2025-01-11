@@ -1,6 +1,7 @@
 package com.example.sofilove.Discount.domain;
 
 import com.example.sofilove.Category.domain.Category;
+import com.example.sofilove.Product.domain.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -40,12 +41,16 @@ public class Discount {
 
     private Boolean activo;
 
-    @ManyToMany
-    private List<Category> categories;
+    @ManyToMany(mappedBy = "discounts")
+    private List<Product> products;
 
     @PrePersist
     @PreUpdate
-    private void validateDates() {
+    private void prePersistAndUpdate() {
+        if (activo == null) {
+            this.activo = false;
+        }
+
         if (fechaFin != null && fechaInicio != null && fechaFin.isBefore(fechaInicio)) {
             throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio");
         }

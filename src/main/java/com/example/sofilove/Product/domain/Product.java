@@ -41,19 +41,19 @@ public class Product {
     @Min(value = 0, message = "El stock no puede ser negativa")
     private Integer stock;
 
-    @NotBlank(message = "El nombre del archivo no puede estar vacía")
+    @Size(min = 1, message = "Debe contener al menos un beneficio")
     @ElementCollection
     private List<String> imagenes; // Nombre o clave del archivo en S3
 
-    @NotBlank(message = "Lista de beneficios no puede estar vacía")
+    @Size(min = 1, message = "Debe contener al menos un beneficio")
     @ElementCollection
     private List<String> beneficios;
 
-    @NotBlank(message = "lista de contenido no puede estar vacía")
+    @Size(min = 1, message = "Debe contener al menos un contenido")
     @ElementCollection
     private List<String> contenidos;
 
-    @NotBlank(message = "lista de caracteristicas no puede estar vacía")
+    @Size(min = 1, message = "Debe contener al menos una imagen")
     @ElementCollection
     private List<String> caracteristicas;
 

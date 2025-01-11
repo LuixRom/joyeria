@@ -1,7 +1,5 @@
 package com.example.sofilove.Pedido.domain;
 
-import com.example.sofilove.ComprobantePago.domain.ComprobantePago;
-import com.example.sofilove.Direccion.domain.Direccion;
 import com.example.sofilove.PedidoItem.domain.PedidoItem;
 import com.example.sofilove.Usuario.domain.Usuario;
 import jakarta.persistence.*;
@@ -26,12 +24,6 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoItem> items;
-
-    @Enumerated(EnumType.STRING)
-    private MetodoPago metodoPago;
-
-    @Embedded
-    private ComprobantePago comprobantePago;
 
     @Embedded
     private Direccion direccion;

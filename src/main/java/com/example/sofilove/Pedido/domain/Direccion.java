@@ -1,4 +1,4 @@
-package com.example.sofilove.Direccion.domain;
+package com.example.sofilove.Pedido.domain;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.PrePersist;

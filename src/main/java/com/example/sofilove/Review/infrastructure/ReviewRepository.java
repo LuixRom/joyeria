@@ -1,4 +1,7 @@
 package com.example.sofilove.Review.infrastructure;
 
-public interface ReviewRepository {
+import com.example.sofilove.Review.domain.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
 }

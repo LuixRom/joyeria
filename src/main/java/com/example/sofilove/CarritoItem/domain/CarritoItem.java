@@ -20,7 +20,15 @@ public class CarritoItem {
     @ManyToOne
     private Product product;
 
-    private Integer cantidad; // Cantidad de este producto en el carrito
+    private Integer cantidad = 1; // Cantidad de este producto en el carrito
 
     private Double subtotal;
+
+    @PrePersist
+    @PreUpdate
+    private void calcularSubtotal() {
+        if (cantidad != null && product != null && product.getPrice() != null) {
+            this.subtotal = cantidad * product.getPrice();
+        }
+    }
 }

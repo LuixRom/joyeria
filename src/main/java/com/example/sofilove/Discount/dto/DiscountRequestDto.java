@@ -15,5 +15,5 @@ public class DiscountRequestDto {
     private LocalDateTime fechaInicio; // Si es opcional, puedes quitarlo
     private LocalDateTime fechaFin;
     private Boolean activo; // Estado del descuento (activo/inactivo)
-    private List<Long> categoryIds; // Lista de IDs de categorías para asociar
+    private List<Long> productIds; // Lista de IDs de categorías para asociar
 }

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,8 +25,8 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "categories")
-    private List<Discount> discounts;
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    private List<Discount> discounts = new ArrayList<>();
 }

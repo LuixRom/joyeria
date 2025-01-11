@@ -16,5 +16,5 @@ public class DiscountResponseDto {
     private LocalDateTime fechaInicio; // Fecha de inicio del descuento
     private LocalDateTime fechaFin; // Fecha de fin del descuento
     private Boolean activo; // Estado del descuento
-    private List<String> categoryNames; // Lista de nombres de las categorías asociadas
+    private List<String> productNames; // Lista de nombres de las categorías asociadas
 }
