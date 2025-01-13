@@ -1,6 +1,6 @@
 package com.example.sofilove.Pedido.domain;
 
-import com.example.sofilove.Carrito.domain.Carrito;
+
 import com.example.sofilove.CarritoItem.domain.CarritoItem;
 import com.example.sofilove.Usuario.domain.Usuario;
 import jakarta.persistence.*;
@@ -22,9 +22,6 @@ public class Pedido {
     @ManyToOne
     private Usuario usuario;
 
-    @OneToMany
-    @JoinColumn(name = "carrito_id")
-    private CarritoItem carrito;
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")
@@ -95,4 +92,5 @@ public class Pedido {
             this.estado = Estado.PENDIENTE;
         }
     }
+
 }
