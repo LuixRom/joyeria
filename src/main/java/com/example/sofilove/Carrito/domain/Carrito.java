@@ -17,6 +17,8 @@ public class Carrito {
 
     private Double total;
 
+
+
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)
     private List<CarritoItem> items;
 }

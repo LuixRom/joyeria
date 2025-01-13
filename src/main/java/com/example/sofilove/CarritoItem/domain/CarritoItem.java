@@ -21,8 +21,6 @@ public class CarritoItem {
     @ManyToOne
     private Product product;
 
-    @ManyToOne
-    private Pedido pedido;
 
     private Integer cantidad = 1; // Cantidad de este producto en el carrito
 
