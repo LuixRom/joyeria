@@ -2,7 +2,6 @@ package com.example.sofilove.Pedido.domain;
 
 
 import com.example.sofilove.CarritoItem.domain.CarritoItem;
-import com.example.sofilove.Product.domain.Product;
 import com.example.sofilove.Usuario.domain.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -24,8 +23,6 @@ public class Pedido {
     private Usuario usuario;
 
 
-    @OneToMany
-    private List<Product> productos;
 
 
     @NotBlank(message = "El nombre no puede estar vacío")

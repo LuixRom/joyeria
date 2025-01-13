@@ -12,5 +12,4 @@ import java.util.List;
 public class CarritoRequestDto {
     @NotNull(message = "La lista de ítems no puede ser nula")
     private List<CarritoItemRequestDto> items;
-
 }

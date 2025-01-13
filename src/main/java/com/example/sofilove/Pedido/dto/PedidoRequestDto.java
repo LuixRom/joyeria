@@ -13,9 +13,6 @@ import java.util.List;
 public class PedidoRequestDto {
     private Long carritoId;
 
-    @NotNull(message = "El carrito no puede ser nulo")
-    private List<CarritoItemRequestDto> items;
-
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")
     private String nombreFacturacion;
