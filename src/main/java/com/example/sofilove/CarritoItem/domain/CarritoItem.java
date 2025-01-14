@@ -21,7 +21,6 @@ public class CarritoItem {
     @ManyToOne
     private Product product;
 
-
     private Integer cantidad = 1; // Cantidad de este producto en el carrito
 
     private Double subtotal;

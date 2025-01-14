@@ -3,6 +3,7 @@ package com.example.sofilove.Category.application;
 import com.example.sofilove.Category.domain.CategoryService;
 import com.example.sofilove.Category.dto.CategoryRequestDto;
 import com.example.sofilove.Category.dto.CategoryResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    private ResponseEntity<CategoryResponseDto> createCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
+    private ResponseEntity<CategoryResponseDto> createCategory(@Valid @RequestBody CategoryRequestDto categoryRequestDto) {
         CategoryResponseDto categoryResponseDto = categoryService.saveCategory(categoryRequestDto);
         return ResponseEntity.ok(categoryResponseDto);
     }
@@ -34,8 +35,14 @@ public class CategoryController {
         return ResponseEntity.ok(categoryResponseDto);
     }
 
+    @GetMapping("by-name/{name}")
+    public ResponseEntity<CategoryResponseDto> getCategoryByName(@PathVariable String name) {
+        CategoryResponseDto categoryResponseDto = categoryService.getCategoryByName(name);
+        return ResponseEntity.ok(categoryResponseDto);
+    }
+
     @PutMapping("/{id}")
-    private ResponseEntity<CategoryResponseDto> updateCategory(@PathVariable Long id, @RequestBody CategoryRequestDto categoryRequestDto) {
+    private ResponseEntity<CategoryResponseDto> updateCategory(@PathVariable Long id,@Valid @RequestBody CategoryRequestDto categoryRequestDto) {
         CategoryResponseDto categoryResponseDto = categoryService.updateCategory(id, categoryRequestDto);
         return ResponseEntity.ok(categoryResponseDto);
     }
