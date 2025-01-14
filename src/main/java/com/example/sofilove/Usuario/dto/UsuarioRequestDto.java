@@ -11,5 +11,4 @@ public class UsuarioRequestDto {
     private String email;
     private String password;
     private String phone;
-    private String role;
 }

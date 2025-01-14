@@ -1,5 +1,6 @@
 package com.example.sofilove.Usuario.domain;
 
+import com.example.sofilove.Carrito.domain.Carrito;
 import com.example.sofilove.Pedido.domain.Pedido;
 import com.example.sofilove.Review.domain.Review;
 import jakarta.persistence.*;
@@ -18,6 +19,10 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Carrito carrito;
+
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")
