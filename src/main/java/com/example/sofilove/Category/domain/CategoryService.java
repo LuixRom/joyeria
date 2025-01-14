@@ -54,10 +54,4 @@ public class CategoryService {
         return modelMapper.map(category, CategoryResponseDto.class);
     }
 
-    public CategoryResponseDto getCategoryByName(String name){
-        Category category = categoryRepository.findByName(name).orElseThrow(() -> new ResourceNotFound("Category not found"));
-
-        return modelMapper.map(category, CategoryResponseDto.class);
-    }
-
 }

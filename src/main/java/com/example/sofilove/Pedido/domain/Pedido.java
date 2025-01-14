@@ -23,10 +23,6 @@ public class Pedido {
     @ManyToOne
     private Usuario usuario;
 
-    @OneToOne  // Relación uno a uno con el carrito
-    @JoinColumn(name = "carrito_id")
-    private Carrito carrito;
-
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")
     private String nombreFacturacion;
