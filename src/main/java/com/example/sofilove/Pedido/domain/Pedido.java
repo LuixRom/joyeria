@@ -3,6 +3,7 @@ package com.example.sofilove.Pedido.domain;
 
 import com.example.sofilove.Carrito.domain.Carrito;
 import com.example.sofilove.CarritoItem.domain.CarritoItem;
+import com.example.sofilove.PedidoItem.domain.PedidoItem;
 import com.example.sofilove.Usuario.domain.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -22,6 +23,9 @@ public class Pedido {
 
     @ManyToOne
     private Usuario usuario;
+
+    @OneToMany
+    private List<PedidoItem> itens;
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")

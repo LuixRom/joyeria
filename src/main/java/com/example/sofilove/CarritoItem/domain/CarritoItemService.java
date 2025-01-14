@@ -37,10 +37,11 @@ public class CarritoItemService {
                 orElseThrow(()-> new ResourceNotFound("El producto no existe"));
 
         CarritoItem carritoItem = new CarritoItem();
-        carritoItem.setCarrito(carrito);
         carritoItem.setProduct(product);
         carritoItem.setCantidad(requestDto.getCantidad());
         carritoItem.setSubtotal(product.getPrice() * requestDto.getCantidad());
+        carrito.setTotal(carrito.getTotal() + carritoItem.getSubtotal());
+        carritoItem.setCarrito(carrito);
 
         return modelMapper.map(carritoItemRepository.save(carritoItem), CarritoItemResponseDto.class);
     }

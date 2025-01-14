@@ -19,7 +19,7 @@ public class Carrito {
     @OneToOne
     private Usuario usuario;
 
-    private Double total;
+    private Double total = 0.0; // por default en 0 soles
 
 
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)

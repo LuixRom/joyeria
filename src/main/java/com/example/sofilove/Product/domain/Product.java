@@ -51,6 +51,7 @@ public class Product {
 
     private Integer descuento;
 
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
