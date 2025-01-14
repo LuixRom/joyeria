@@ -1,4 +1,42 @@
 package com.example.sofilove.Carrito.domain;
 
+import com.example.sofilove.Carrito.dto.CarritoResponseDto;
+import com.example.sofilove.Carrito.infrastructure.CarritoRepository;
+import com.example.sofilove.exception.ResourceNotFound;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+@Service
 public class CarritoService {
+    private final CarritoRepository carritoRepository;
+    private final ModelMapper modelMapper;
+
+    public CarritoService(CarritoRepository carritoRepository, ModelMapper modelMapper) {
+        this.carritoRepository = carritoRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    public CarritoResponseDto getCarritoById(Long usuarioId) {
+        Carrito carrito = carritoRepository.findById(usuarioId).
+                orElseThrow(()-> new ResourceNotFound("Carrito no encontrado para el usuario"));
+
+        return modelMapper.map(carrito, CarritoResponseDto.class);
+    }
+
+    public void deleteCarritoById(Long carritoId) {
+        Carrito carrito = carritoRepository.findById(carritoId).orElseThrow(
+                () -> new ResourceNotFound("Carrito no encontrado")
+        );
+        carritoRepository.delete(carrito);
+    }
+
+    public void emptyCarrito(Long carritoId) {
+        Carrito carrito = carritoRepository.findById(carritoId)
+                .orElseThrow(() -> new ResourceNotFound("Carrito no encontrado"));
+
+        carrito.getItems().clear();
+        carrito.setTotal(0.0);
+        carritoRepository.save(carrito);
+    }
+
 }
