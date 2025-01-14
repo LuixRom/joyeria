@@ -23,7 +23,6 @@ public class Pedido {
     @ManyToOne
     private Usuario usuario;
 
-    
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")
     private String nombreFacturacion;
@@ -93,4 +92,5 @@ public class Pedido {
             this.estado = Estado.PENDIENTE;
         }
     }
+
 }
