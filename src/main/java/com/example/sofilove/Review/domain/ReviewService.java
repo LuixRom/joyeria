@@ -8,6 +8,7 @@ import com.example.sofilove.Usuario.infrastructure.UsuarioRepository;
 import com.example.sofilove.exception.ResourceNotFound;
 import jakarta.annotation.Resource;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class ReviewService {
     private final UsuarioRepository usuarioRepository;
     private final ProductRepository productRepository;
 
+    @Autowired
     public ReviewService(ReviewRepository reviewRepository, ModelMapper modelMapper, UsuarioRepository usuarioRepository, ProductRepository productRepository) {
         this.reviewRepository = reviewRepository;
         this.modelMapper = modelMapper;

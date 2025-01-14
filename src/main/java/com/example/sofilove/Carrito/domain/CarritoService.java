@@ -4,6 +4,7 @@ import com.example.sofilove.Carrito.dto.CarritoResponseDto;
 import com.example.sofilove.Carrito.infrastructure.CarritoRepository;
 import com.example.sofilove.exception.ResourceNotFound;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +12,7 @@ public class CarritoService {
     private final CarritoRepository carritoRepository;
     private final ModelMapper modelMapper;
 
+    @Autowired
     public CarritoService(CarritoRepository carritoRepository, ModelMapper modelMapper) {
         this.carritoRepository = carritoRepository;
         this.modelMapper = modelMapper;

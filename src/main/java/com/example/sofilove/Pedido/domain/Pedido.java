@@ -25,7 +25,7 @@ public class Pedido {
     private Usuario usuario;
 
     @OneToMany
-    private List<PedidoItem> itens;
+    private List<PedidoItem> items;
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")

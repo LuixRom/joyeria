@@ -2,6 +2,7 @@ package com.example.sofilove.Carrito.application;
 
 import com.example.sofilove.Carrito.domain.CarritoService;
 import com.example.sofilove.Carrito.dto.CarritoResponseDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class CarritoController {
     private final CarritoService carritoService;
 
+    @Autowired
     public CarritoController(CarritoService carritoService) {
         this.carritoService = carritoService;
     }
