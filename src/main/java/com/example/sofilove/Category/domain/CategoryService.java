@@ -1,8 +1,8 @@
-package com.example.sofilove.Category.domain;
+package com.example.sofilove.category.domain;
 
-import com.example.sofilove.Category.dto.CategoryRequestDto;
-import com.example.sofilove.Category.dto.CategoryResponseDto;
-import com.example.sofilove.Category.infrastructure.CategoryRepository;
+import com.example.sofilove.category.dto.CategoryRequestDto;
+import com.example.sofilove.category.dto.CategoryResponseDto;
+import com.example.sofilove.category.infrastructure.CategoryRepository;
 import com.example.sofilove.exception.ResourceConflict;
 import com.example.sofilove.exception.ResourceNotFound;
 import org.modelmapper.ModelMapper;

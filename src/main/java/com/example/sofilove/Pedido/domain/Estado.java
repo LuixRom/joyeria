@@ -1,4 +1,4 @@
-package com.example.sofilove.Pedido.domain;
+package com.example.sofilove.pedido.domain;
 
 public enum Estado {
     PENDIENTE, ENVIADO, FALLIDO

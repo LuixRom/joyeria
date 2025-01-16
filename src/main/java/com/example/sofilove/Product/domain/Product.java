@@ -1,13 +1,14 @@
-package com.example.sofilove.Product.domain;
+package com.example.sofilove.product.domain;
 
-import com.example.sofilove.Category.domain.Category;
-import com.example.sofilove.Review.domain.Review;
+import com.example.sofilove.category.domain.Category;
+import com.example.sofilove.review.domain.Review;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 import java.util.List;

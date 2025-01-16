@@ -1,6 +1,6 @@
-package com.example.sofilove.Review.infrastructure;
+package com.example.sofilove.review.infrastructure;
 
-import com.example.sofilove.Review.domain.Review;
+import com.example.sofilove.review.domain.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

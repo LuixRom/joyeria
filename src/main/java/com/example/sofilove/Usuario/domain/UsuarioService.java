@@ -1,14 +1,16 @@
-package com.example.sofilove.Usuario.domain;
+package com.example.sofilove.usuario.domain;
 
-import com.example.sofilove.Carrito.domain.Carrito;
-import com.example.sofilove.Usuario.dto.UsuarioRequestDto;
-import com.example.sofilove.Usuario.dto.UsuarioResponseDto;
-import com.example.sofilove.Usuario.infrastructure.UsuarioRepository;
+import com.example.sofilove.carrito.domain.Carrito;
+import com.example.sofilove.usuario.dto.UsuarioRequestDto;
+import com.example.sofilove.usuario.dto.UsuarioResponseDto;
+import com.example.sofilove.usuario.infrastructure.UsuarioRepository;
 
+import com.example.sofilove.event.usuario.CreateAccountEvent;
 import com.example.sofilove.exception.ResourceConflict;
 import com.example.sofilove.exception.ResourceNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,15 +19,15 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-
-
     private final ModelMapper modelMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher) {
         this.usuarioRepository = usuarioRepository;
         this.modelMapper = modelMapper;
+        this.eventPublisher = eventPublisher;
     }
 
     public UsuarioResponseDto create(UsuarioRequestDto usuarioRequestDto) {
@@ -42,6 +44,8 @@ public class UsuarioService {
         }
         usuarioRepository.save(usuario);
 
+        CreateAccountEvent event = new CreateAccountEvent(this, usuario.getEmail(), usuario.getNombre());
+        eventPublisher.publishEvent(event);
         return modelMapper.map(usuario, UsuarioResponseDto.class);
     }
 

@@ -1,4 +1,4 @@
-package com.example.sofilove.Review.dto;
+package com.example.sofilove.review.dto;
 
 import lombok.Getter;
 import lombok.Setter;

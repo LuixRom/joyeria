@@ -1,4 +1,4 @@
-package com.example.sofilove.Usuario.dto;
+package com.example.sofilove.usuario.dto;
 
 import lombok.Getter;
 import lombok.Setter;

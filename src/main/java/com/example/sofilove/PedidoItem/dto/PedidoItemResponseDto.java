@@ -1,4 +1,4 @@
-package com.example.sofilove.PedidoItem.dto;
+package com.example.sofilove.pedidoItem.dto;
 
 
 import lombok.Getter;

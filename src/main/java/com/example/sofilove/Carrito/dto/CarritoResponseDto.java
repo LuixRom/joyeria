@@ -1,6 +1,6 @@
-package com.example.sofilove.Carrito.dto;
+package com.example.sofilove.carrito.dto;
 
-import com.example.sofilove.CarritoItem.dto.CarritoItemResponseDto;
+import com.example.sofilove.carritoItem.dto.CarritoItemResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 

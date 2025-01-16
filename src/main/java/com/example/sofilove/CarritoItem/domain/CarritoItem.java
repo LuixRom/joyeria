@@ -1,8 +1,7 @@
-package com.example.sofilove.CarritoItem.domain;
+package com.example.sofilove.carritoItem.domain;
 
-import com.example.sofilove.Carrito.domain.Carrito;
-import com.example.sofilove.Pedido.domain.Pedido;
-import com.example.sofilove.Product.domain.Product;
+import com.example.sofilove.carrito.domain.Carrito;
+import com.example.sofilove.product.domain.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

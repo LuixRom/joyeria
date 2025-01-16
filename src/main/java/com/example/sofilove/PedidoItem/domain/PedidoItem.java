@@ -1,13 +1,13 @@
-package com.example.sofilove.PedidoItem.domain;
+package com.example.sofilove.pedidoItem.domain;
 
 
-import com.example.sofilove.Pedido.domain.Pedido;
-import com.example.sofilove.Product.domain.Product;
+import com.example.sofilove.pedido.domain.Pedido;
+import com.example.sofilove.product.domain.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+
 
 
 @Entity

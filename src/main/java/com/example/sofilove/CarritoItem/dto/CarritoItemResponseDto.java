@@ -1,4 +1,4 @@
-package com.example.sofilove.CarritoItem.dto;
+package com.example.sofilove.carritoItem.dto;
 
 import lombok.Getter;
 import lombok.Setter;

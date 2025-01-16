@@ -1,15 +1,13 @@
-package com.example.sofilove.Pedido.domain;
+package com.example.sofilove.pedido.domain;
 
 
-import com.example.sofilove.Carrito.domain.Carrito;
-import com.example.sofilove.CarritoItem.domain.CarritoItem;
-import com.example.sofilove.PedidoItem.domain.PedidoItem;
-import com.example.sofilove.Usuario.domain.Usuario;
+import com.example.sofilove.pedidoItem.domain.PedidoItem;
+import com.example.sofilove.usuario.domain.Usuario;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
 

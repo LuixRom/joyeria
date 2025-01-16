@@ -1,12 +1,11 @@
-package com.example.sofilove.Pedido.dto;
+package com.example.sofilove.pedido.dto;
 
 
-import com.example.sofilove.CarritoItem.dto.CarritoItemRequestDto;
-import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import jakarta.validation.constraints.*;
+
 
 @Getter
 @Setter

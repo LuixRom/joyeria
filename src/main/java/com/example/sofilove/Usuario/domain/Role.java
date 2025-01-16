@@ -1,4 +1,4 @@
-package com.example.sofilove.Usuario.domain;
+package com.example.sofilove.usuario.domain;
 
 public enum Role {
     CLIENTE, ADMIN

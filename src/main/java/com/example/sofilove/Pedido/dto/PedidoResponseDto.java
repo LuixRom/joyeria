@@ -1,12 +1,9 @@
-package com.example.sofilove.Pedido.dto;
+package com.example.sofilove.pedido.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter

@@ -1,16 +1,16 @@
-package com.example.sofilove.Carrito.domain;
+package com.example.sofilove.carrito.domain;
 
-import com.example.sofilove.CarritoItem.domain.CarritoItem;
-import com.example.sofilove.Usuario.domain.Usuario;
-import jakarta.persistence.*;
+import com.example.sofilove.carritoItem.domain.CarritoItem;
+import com.example.sofilove.usuario.domain.Usuario;
 import lombok.Getter;
 import lombok.Setter;
-
+import jakarta.persistence.*;
 import java.util.List;
 
-@Entity
+
 @Getter
 @Setter
+@Entity
 public class Carrito {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +24,6 @@ public class Carrito {
 
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)
     private List<CarritoItem> items;
+
+
 }

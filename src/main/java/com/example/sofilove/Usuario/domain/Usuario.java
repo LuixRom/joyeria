@@ -1,13 +1,14 @@
-package com.example.sofilove.Usuario.domain;
+package com.example.sofilove.usuario.domain;
 
-import com.example.sofilove.Carrito.domain.Carrito;
-import com.example.sofilove.Pedido.domain.Pedido;
-import com.example.sofilove.Review.domain.Review;
+import com.example.sofilove.carrito.domain.Carrito;
+import com.example.sofilove.pedido.domain.Pedido;
+import com.example.sofilove.review.domain.Review;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 import java.util.List;

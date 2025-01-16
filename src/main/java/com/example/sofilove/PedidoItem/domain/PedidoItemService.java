@@ -1,7 +1,7 @@
-package com.example.sofilove.PedidoItem.domain;
+package com.example.sofilove.pedidoItem.domain;
 
-import com.example.sofilove.PedidoItem.dto.PedidoItemResponseDto;
-import com.example.sofilove.PedidoItem.infrastructure.PedidoItemRepository;
+import com.example.sofilove.pedidoItem.dto.PedidoItemResponseDto;
+import com.example.sofilove.pedidoItem.infrastructure.PedidoItemRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

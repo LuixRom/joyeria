@@ -1,12 +1,14 @@
-package com.example.sofilove.Category.application;
+package com.example.sofilove.category.application;
 
-import com.example.sofilove.Category.domain.CategoryService;
-import com.example.sofilove.Category.dto.CategoryRequestDto;
-import com.example.sofilove.Category.dto.CategoryResponseDto;
+import com.example.sofilove.category.domain.CategoryService;
+import com.example.sofilove.category.dto.CategoryRequestDto;
+import com.example.sofilove.category.dto.CategoryResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
 
 @RestController("/category")
 public class CategoryController {

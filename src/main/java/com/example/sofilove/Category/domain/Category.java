@@ -1,11 +1,12 @@
-package com.example.sofilove.Category.domain;
+package com.example.sofilove.category.domain;
 
-import com.example.sofilove.Product.domain.Product;
+import com.example.sofilove.product.domain.Product;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.Setter;
+
+import jakarta.validation.constraints.*;
 
 import java.util.ArrayList;
 import java.util.List;

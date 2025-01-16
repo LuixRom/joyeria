@@ -1,6 +1,6 @@
-package com.example.sofilove.Product.infrastructure;
+package com.example.sofilove.product.infrastructure;
 
-import com.example.sofilove.Product.domain.Product;
+import com.example.sofilove.product.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

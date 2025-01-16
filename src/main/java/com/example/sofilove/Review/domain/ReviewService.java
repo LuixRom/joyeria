@@ -1,12 +1,11 @@
-package com.example.sofilove.Review.domain;
+package com.example.sofilove.review.domain;
 
-import com.example.sofilove.Product.infrastructure.ProductRepository;
-import com.example.sofilove.Review.dto.ReviewRequestDto;
-import com.example.sofilove.Review.dto.ReviewResponseDto;
-import com.example.sofilove.Review.infrastructure.ReviewRepository;
-import com.example.sofilove.Usuario.infrastructure.UsuarioRepository;
+import com.example.sofilove.product.infrastructure.ProductRepository;
+import com.example.sofilove.review.dto.ReviewRequestDto;
+import com.example.sofilove.review.dto.ReviewResponseDto;
+import com.example.sofilove.review.infrastructure.ReviewRepository;
+import com.example.sofilove.usuario.infrastructure.UsuarioRepository;
 import com.example.sofilove.exception.ResourceNotFound;
-import jakarta.annotation.Resource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

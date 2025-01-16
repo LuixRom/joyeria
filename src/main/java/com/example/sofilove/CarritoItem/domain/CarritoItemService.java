@@ -1,12 +1,12 @@
-package com.example.sofilove.CarritoItem.domain;
+package com.example.sofilove.carritoItem.domain;
 
-import com.example.sofilove.Carrito.domain.Carrito;
-import com.example.sofilove.Carrito.infrastructure.CarritoRepository;
-import com.example.sofilove.CarritoItem.dto.CarritoItemRequestDto;
-import com.example.sofilove.CarritoItem.dto.CarritoItemResponseDto;
-import com.example.sofilove.CarritoItem.infrastructure.CarritoItemRepository;
-import com.example.sofilove.Product.domain.Product;
-import com.example.sofilove.Product.infrastructure.ProductRepository;
+import com.example.sofilove.carrito.domain.Carrito;
+import com.example.sofilove.carrito.infrastructure.CarritoRepository;
+import com.example.sofilove.carritoItem.dto.CarritoItemRequestDto;
+import com.example.sofilove.carritoItem.dto.CarritoItemResponseDto;
+import com.example.sofilove.carritoItem.infrastructure.CarritoItemRepository;
+import com.example.sofilove.product.domain.Product;
+import com.example.sofilove.product.infrastructure.ProductRepository;
 import com.example.sofilove.exception.ResourceNotFound;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;

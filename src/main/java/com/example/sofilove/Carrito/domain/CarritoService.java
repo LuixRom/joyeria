@@ -1,7 +1,8 @@
-package com.example.sofilove.Carrito.domain;
+package com.example.sofilove.carrito.domain;
 
-import com.example.sofilove.Carrito.dto.CarritoResponseDto;
-import com.example.sofilove.Carrito.infrastructure.CarritoRepository;
+
+import com.example.sofilove.carrito.dto.CarritoResponseDto;
+import com.example.sofilove.carrito.infrastructure.CarritoRepository;
 import com.example.sofilove.exception.ResourceNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

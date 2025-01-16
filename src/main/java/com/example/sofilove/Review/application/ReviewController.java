@@ -1,8 +1,8 @@
-package com.example.sofilove.Review.application;
+package com.example.sofilove.review.application;
 
-import com.example.sofilove.Review.domain.ReviewService;
-import com.example.sofilove.Review.dto.ReviewRequestDto;
-import com.example.sofilove.Review.dto.ReviewResponseDto;
+import com.example.sofilove.review.domain.ReviewService;
+import com.example.sofilove.review.dto.ReviewRequestDto;
+import com.example.sofilove.review.dto.ReviewResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

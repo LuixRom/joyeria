@@ -1,9 +1,9 @@
-package com.example.sofilove.Usuario.application;
+package com.example.sofilove.usuario.application;
 
 
-import com.example.sofilove.Usuario.domain.UsuarioService;
-import com.example.sofilove.Usuario.dto.UsuarioRequestDto;
-import com.example.sofilove.Usuario.dto.UsuarioResponseDto;
+import com.example.sofilove.usuario.domain.UsuarioService;
+import com.example.sofilove.usuario.dto.UsuarioRequestDto;
+import com.example.sofilove.usuario.dto.UsuarioResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

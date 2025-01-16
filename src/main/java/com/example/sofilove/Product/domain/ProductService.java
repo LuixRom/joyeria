@@ -1,10 +1,10 @@
-package com.example.sofilove.Product.domain;
+package com.example.sofilove.product.domain;
 
 
-import com.example.sofilove.Category.infrastructure.CategoryRepository;
-import com.example.sofilove.Product.dto.ProductRequestDto;
-import com.example.sofilove.Product.dto.ProductResponseDto;
-import com.example.sofilove.Product.infrastructure.ProductRepository;
+import com.example.sofilove.category.infrastructure.CategoryRepository;
+import com.example.sofilove.product.dto.ProductRequestDto;
+import com.example.sofilove.product.dto.ProductResponseDto;
+import com.example.sofilove.product.infrastructure.ProductRepository;
 import com.example.sofilove.exception.ResourceConflict;
 import com.example.sofilove.exception.ResourceNotFound;
 import org.modelmapper.ModelMapper;

@@ -1,10 +1,10 @@
-package com.example.sofilove.Carrito.dto;
+package com.example.sofilove.carrito.dto;
 
-import com.example.sofilove.CarritoItem.dto.CarritoItemRequestDto;
-import jakarta.validation.constraints.NotNull;
+import com.example.sofilove.carritoItem.dto.CarritoItemRequestDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import jakarta.validation.constraints.*;
 import java.util.List;
 
 @Getter

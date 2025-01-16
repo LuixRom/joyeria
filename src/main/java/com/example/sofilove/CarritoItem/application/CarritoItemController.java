@@ -1,8 +1,8 @@
-package com.example.sofilove.CarritoItem.application;
+package com.example.sofilove.carritoItem.application;
 
-import com.example.sofilove.CarritoItem.domain.CarritoItemService;
-import com.example.sofilove.CarritoItem.dto.CarritoItemRequestDto;
-import com.example.sofilove.CarritoItem.dto.CarritoItemResponseDto;
+import com.example.sofilove.carritoItem.domain.CarritoItemService;
+import com.example.sofilove.carritoItem.dto.CarritoItemRequestDto;
+import com.example.sofilove.carritoItem.dto.CarritoItemResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

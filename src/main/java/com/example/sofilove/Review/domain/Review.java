@@ -1,12 +1,13 @@
-package com.example.sofilove.Review.domain;
+package com.example.sofilove.review.domain;
 
-import com.example.sofilove.Product.domain.Product;
-import com.example.sofilove.Usuario.domain.Usuario;
+import com.example.sofilove.product.domain.Product;
+import com.example.sofilove.usuario.domain.Usuario;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
+
+import jakarta.validation.constraints.*;
+
 
 @Entity
 @Getter
