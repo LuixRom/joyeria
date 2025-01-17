@@ -1,6 +1,6 @@
 package com.example.sofilove.Pedido.application;
 
-import com.example.sofilove.Pedido.domain.Pedidoservice;
+import com.example.sofilove.Pedido.domain.PedidoService;
 import com.example.sofilove.Pedido.dto.PedidoRequestDto;
 import com.example.sofilove.Pedido.dto.PedidoResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping("/pedido")
 public class PedidoController {
 
-    private final Pedidoservice pedidoservice;
+    private final PedidoService pedidoservice;
 
     @Autowired
-    public PedidoController(Pedidoservice pedidoservice) {
+    public PedidoController(PedidoService pedidoservice) {
         this.pedidoservice = pedidoservice;
     }
 
