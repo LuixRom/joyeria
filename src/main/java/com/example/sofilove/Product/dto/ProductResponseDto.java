@@ -20,8 +20,8 @@ public class ProductResponseDto {
     private String color;
     private Double price;
     private Integer stock;
-    private List<String> imagenes;
     private String categoryName;
     private Integer descuento;
+    private List<String> imagenes;
 }
 

@@ -1,6 +1,7 @@
 package com.example.sofilove.Usuario.domain;
 
 import com.example.sofilove.Carrito.domain.Carrito;
+import com.example.sofilove.Carrito.infrastructure.CarritoRepository;
 import com.example.sofilove.Usuario.dto.UsuarioRequestDto;
 import com.example.sofilove.Usuario.dto.UsuarioResponseDto;
 import com.example.sofilove.Usuario.infrastructure.UsuarioRepository;
@@ -20,15 +21,17 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final CarritoRepository carritoRepository;
 
     private final ModelMapper modelMapper;
 
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher, CarritoRepository carritoRepository) {
         this.eventPublisher = eventPublisher;
         this.usuarioRepository = usuarioRepository;
         this.modelMapper = modelMapper;
+        this.carritoRepository = carritoRepository;
     }
 
     public UsuarioResponseDto create(UsuarioRequestDto usuarioRequestDto) {
@@ -36,6 +39,8 @@ public class UsuarioService {
         modelMapper.map(usuarioRequestDto, usuario);
 
         Carrito carrito = new Carrito();
+
+
         usuario.setCarrito(carrito);
         usuario.setRole(Role.CLIENTE);
 
@@ -44,6 +49,9 @@ public class UsuarioService {
             throw new ResourceConflict("El email ya existe");
         }
         usuarioRepository.save(usuario);
+
+        carrito.setUsuario(usuario);
+        carritoRepository.save(carrito);
 
         eventPublisher.publishEvent(new CreateAccountEvent(this, usuario.getEmail(), usuario.getNombre()));
         return modelMapper.map(usuario, UsuarioResponseDto.class);

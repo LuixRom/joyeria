@@ -22,6 +22,7 @@ public class Product {
 
     @NotBlank(message= "El nombre no debe estar vacío")
     @Size(max=50, message= "El nombre debe de tener como maximo 50 caracteres")
+    @Column(unique = true)
     private String name;
 
     @NotBlank(message= "La descripcion no debe estar vacío")
@@ -40,11 +41,13 @@ public class Product {
     @Min(value = 0, message = "El stock no puede ser negativa")
     private Integer stock;
 
-    @Size(min = 1, message = "Debe contener al menos un beneficio")
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "image_url")
     private List<String> imagenes; // Nombre o clave del archivo en S3
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     private Boolean isDiscount;

@@ -1,12 +1,14 @@
 package com.example.sofilove.Product.domain;
 
 
+import com.example.sofilove.Category.domain.Category;
 import com.example.sofilove.Category.infrastructure.CategoryRepository;
 import com.example.sofilove.Product.dto.ProductRequestDto;
 import com.example.sofilove.Product.dto.ProductResponseDto;
 import com.example.sofilove.Product.infrastructure.ProductRepository;
 import com.example.sofilove.exception.ResourceConflict;
 import com.example.sofilove.exception.ResourceNotFound;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,14 +30,31 @@ public class ProductService {
     }
 
     public ProductResponseDto create(ProductRequestDto productRequestDto) {
+        // Crear una nueva instancia de Product y mapear los campos manualmente
         Product product = new Product();
-        modelMapper.map(productRequestDto, product);
-        if(productRepository.existsByName(product.getName())){
-            throw new ResourceConflict("Product already exists");
-        }
-        productRepository.save(product);
-        return modelMapper.map(product, ProductResponseDto.class);
+        product.setName(productRequestDto.getName());
+        product.setDescription(productRequestDto.getDescription());
+        product.setColor(productRequestDto.getColor());
+        product.setPrice(productRequestDto.getPrice());
+        product.setStock(productRequestDto.getStock());
+        product.setIsDiscount(productRequestDto.getIsDiscount());
+        product.setDescuento(productRequestDto.getDescuento());
+        product.setImagenes(productRequestDto.getImagenes());
+        // Buscar la categoría asociada
+        Category category = categoryRepository.findById(productRequestDto.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFound("Category not found"));
+
+        product.setCategory(category);
+
+        // Guardar el producto
+        Product savedProduct = productRepository.save(product);
+
+        // Mapear manualmente a ProductResponseDto
+
+
+        return new ModelMapper().map(savedProduct, ProductResponseDto.class);
     }
+
 
     public ProductResponseDto getProductById(Long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ResourceConflict("Product not found"));
