@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Rechazado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #E63946;
+        }
+        p {
+            color: #333333;
+            line-height: 1.6;
+        }
+        .highlight {
+            color: #E63946;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .social-icons img {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+        .social-icons img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <img src="https://res.cloudinary.com/dgsuts57l/image/upload/v1737252211/logo_plabwl.jpg" alt="Logo de la empresa">
+    </div>
+    <h1>Pedido Rechazado</h1>
+    <p>Hola <span class="highlight" th:text="${nombreFacturacion}">Nombre del Usuario</span>,</p>
+    <p>Lamentamos informarte que tu pedido ha sido rechazado.</p>
+
+    <p><strong>Estado del Pedido:</strong> <span class="highlight" th:text="${estadoPedido}">Rechazado</span></p>
+    <p><strong>Total:</strong> S/ <span th:text="${total}">0.00</span></p>
+    <p><strong>Fecha del Pedido:</strong> <span th:text="${fechaPedido}">Fecha</span></p>
+
+    <p>Por favor, ponte en contacto con nuestro equipo de soporte si necesitas más información.</p>
+
+    <div class="footer">
+        <p>&copy; 2025 Mayra Display. Todos los derechos reservados.</p>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/yeru_peru/">
+                <img src="https://res.cloudinary.com/dgsuts57l/image/upload/v1737252211/instagram-new_ntvrjh.png" alt="Instagram">
+            </a>
+            <a href="https://www.tiktok.com/@mayradisplay">
+                <img src="https://res.cloudinary.com/dgsuts57l/image/upload/v1737252212/tiktok-new_tz4uuv.png" alt="TikTok">
+            </a>
+            <a href="https://www.facebook.com/MayraDisplayPeru">
+                <img src="https://res.cloudinary.com/dgsuts57l/image/upload/v1737252210/facebook-new_ps6y22.png" alt="Facebook">
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

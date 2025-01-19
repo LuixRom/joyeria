@@ -1,4 +1,4 @@
-package com.example.sofilove.event.usuario;
+package com.example.sofilove.event.Usuario;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -22,7 +22,7 @@ public class UsuarioListener {
 
     @Async
     @EventListener
-    public void enviarEmail(CreateAccountEvent event) throws MessagingException {
+    public void enviarEmail(com.example.sofilove.event.usuario.CreateAccountEvent event) throws MessagingException {
         // Obtener el usuario desde el evento
         String email = event.getEmail();
         String nombre = event.getName();
@@ -40,7 +40,7 @@ public class UsuarioListener {
 
         // Configurar los detalles del correo
         helper.setTo(email);
-        helper.setSubject("¡Bienvenido a Joyeria waaaaa!");
+        helper.setSubject("¡Bienvenido a Mayra Display!");
         helper.setText(contenidoHtml, true);
 
         // Enviar el correo
