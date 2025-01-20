@@ -8,6 +8,10 @@ import com.example.sofilove.Pedido.dto.PedidoRequestDto;
 import com.example.sofilove.Pedido.dto.PedidoResponseDto;
 import com.example.sofilove.Pedido.infrastructure.PedidoRepository;
 import com.example.sofilove.PedidoItem.domain.PedidoItem;
+import com.example.sofilove.PedidoItem.domain.PedidoItemService;
+import com.example.sofilove.PedidoItem.infrastructure.PedidoItemRepository;
+import com.example.sofilove.Usuario.domain.Usuario;
+import com.example.sofilove.Usuario.infrastructure.UsuarioRepository;
 import com.example.sofilove.event.Pedido.PedidoCreatedEvent;
 import com.example.sofilove.event.Pedido.PedidoEnviadoEvent;
 import com.example.sofilove.event.Pedido.PedidoRechazadoEvent;
@@ -18,6 +22,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoService {
@@ -25,33 +30,44 @@ public class PedidoService {
     private final ModelMapper modelMapper;
     private final CarritoRepository carritoRepository;
     private final CarritoService carritoService;
+    private final UsuarioRepository usuarioRepository;
+    private final PedidoItemRepository pedidoItemRepository;
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
 
+
     @Autowired
-    public PedidoService(PedidoRepository pedidoRepository, ModelMapper modelMapper, CarritoRepository carritoRepository, CarritoService carritoService) {
+    public PedidoService(PedidoItemRepository pedidoItemRepository,UsuarioRepository usuarioRepository, PedidoRepository pedidoRepository, ModelMapper modelMapper, CarritoRepository carritoRepository, CarritoService carritoService) {
         this.pedidoRepository = pedidoRepository;
         this.modelMapper = modelMapper;
         this.carritoRepository = carritoRepository;
         this.carritoService = carritoService;
+        this.usuarioRepository = usuarioRepository;
+        this.pedidoItemRepository = pedidoItemRepository;
     }
 
-    public PedidoResponseDto crearPedido(PedidoRequestDto pedidoRequestDto) {
-        Carrito carrito = carritoRepository.findById(pedidoRequestDto.getCarritoId()).orElseThrow(() -> new ResourceNotFound("carrito not found"));
+    public PedidoResponseDto crearPedido(Long userId, PedidoRequestDto pedidoRequestDto) {
+        Usuario usuario = usuarioRepository.findById(userId).orElseThrow(() -> new ResourceNotFound("usuario not found"));
+        Carrito carrito = usuario.getCarrito();
 
         Pedido pedido = modelMapper.map(pedidoRequestDto, Pedido.class);
-        pedido.setTotal(carrito.getTotal());
         pedido.setEstado(Estado.PENDIENTE);
-
-        List<PedidoItem> pedidoItems = carrito.getItems().stream().map(carritoItem -> modelMapper.map(carritoItem, PedidoItem.class)).toList();
-
         pedido.setTotal(carrito.getTotal());
-        pedido.setItems(pedidoItems);
-        pedido.setUsuario(carrito.getUsuario());
+        pedido.setUsuario(usuario);
         pedidoRepository.save(pedido);
 
-        carritoService.emptyCarrito(pedido.getId());
+        List<PedidoItem> pedidoItems = carrito.getItems().stream().map(carritoItem -> {
+            PedidoItem pedidoItem = new PedidoItem();
+            pedidoItem.setCantidad(carritoItem.getCantidad());
+            pedidoItem.setSubtotal(carritoItem.getSubtotal());
+            pedidoItem.setProducto(carritoItem.getProduct());
+            pedidoItem.setPedido(pedido);
+            return pedidoItem;
+        }).toList();
+        pedidoItemRepository.saveAll(pedidoItems);
+
+        carritoService.emptyCarrito(carrito.getId());
 
         eventPublisher.publishEvent(new PedidoCreatedEvent(this, pedido));
 

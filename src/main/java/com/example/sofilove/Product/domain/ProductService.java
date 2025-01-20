@@ -46,6 +46,9 @@ public class ProductService {
 
         product.setCategory(category);
 
+        if(productRepository.existsByName(product.getName())){
+            throw new ResourceConflict("Product already exists");
+        }
         // Guardar el producto
         Product savedProduct = productRepository.save(product);
 
@@ -68,7 +71,20 @@ public class ProductService {
 
     public ProductResponseDto update(Long id, ProductRequestDto productRequestDto) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFound("Product not found"));
-        modelMapper.map(productRequestDto, product);
+        product.setName(productRequestDto.getName());
+        product.setDescription(productRequestDto.getDescription());
+        product.setColor(productRequestDto.getColor());
+        product.setPrice(productRequestDto.getPrice());
+        product.setStock(productRequestDto.getStock());
+        product.setIsDiscount(productRequestDto.getIsDiscount());
+        product.setDescuento(productRequestDto.getDescuento());
+        product.setImagenes(productRequestDto.getImagenes());
+        // Buscar la categoría asociada
+        Category category = categoryRepository.findById(productRequestDto.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFound("Category not found"));
+
+        product.setCategory(category);
+
         productRepository.save(product);
         return modelMapper.map(product, ProductResponseDto.class);
     }
@@ -79,7 +95,7 @@ public class ProductService {
     }
 
     public List<ProductResponseDto> getProductsByCategory(Long category_id) {
-        if(categoryRepository.existsById(category_id)){
+        if(!categoryRepository.existsById(category_id)){
             throw new ResourceNotFound("Category not found");
         }
         List<Product> products = productRepository.findByCategoryId(category_id);

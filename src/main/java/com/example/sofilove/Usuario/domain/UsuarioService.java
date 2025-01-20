@@ -38,20 +38,20 @@ public class UsuarioService {
         Usuario usuario = new Usuario();
         modelMapper.map(usuarioRequestDto, usuario);
 
-        Carrito carrito = new Carrito();
-
-
-        usuario.setCarrito(carrito);
-        usuario.setRole(Role.CLIENTE);
-
-
         if(usuarioRepository.existsByEmail(usuario.getEmail())){
             throw new ResourceConflict("El email ya existe");
         }
+
+        usuario.setRole(Role.CLIENTE);
         usuarioRepository.save(usuario);
 
+        Carrito carrito = new Carrito();
         carrito.setUsuario(usuario);
         carritoRepository.save(carrito);
+
+        usuario.setCarrito(carrito);
+        usuarioRepository.save(usuario);
+
 
         eventPublisher.publishEvent(new CreateAccountEvent(this, usuario.getEmail(), usuario.getNombre()));
         return modelMapper.map(usuario, UsuarioResponseDto.class);
@@ -65,7 +65,9 @@ public class UsuarioService {
 
     public void delete(Long id){
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFound("usuario no encontrado"));
+        carritoRepository.delete(usuario.getCarrito());
         usuarioRepository.delete(usuario);
+
     }
 
     public UsuarioResponseDto update(Long id, UsuarioRequestDto usuarioRequestDto) {

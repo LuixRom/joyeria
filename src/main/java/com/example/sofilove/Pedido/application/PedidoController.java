@@ -3,6 +3,7 @@ package com.example.sofilove.Pedido.application;
 import com.example.sofilove.Pedido.domain.PedidoService;
 import com.example.sofilove.Pedido.dto.PedidoRequestDto;
 import com.example.sofilove.Pedido.dto.PedidoResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +21,13 @@ public class PedidoController {
         this.pedidoservice = pedidoservice;
     }
 
-    @PostMapping
-    public ResponseEntity<PedidoResponseDto> createPedido(PedidoRequestDto pedidoRequestDto) {
-        PedidoResponseDto pedido = pedidoservice.crearPedido(pedidoRequestDto);
-        return ResponseEntity.ok(pedido);
+    @PostMapping("/{userId}")
+    public ResponseEntity<PedidoResponseDto> createPedido(@PathVariable Long userId,  @Valid @RequestBody PedidoRequestDto pedidoRequestDto) {
+        PedidoResponseDto pedido = pedidoservice.crearPedido(userId, pedidoRequestDto);
+        return ResponseEntity.created(null).body(pedido);
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<PedidoResponseDto>> getPedidos() {
         List<PedidoResponseDto> pedidos = pedidoservice.getallPedidos();
         return ResponseEntity.ok(pedidos);

@@ -3,6 +3,7 @@ package com.example.sofilove.Review.application;
 import com.example.sofilove.Review.domain.ReviewService;
 import com.example.sofilove.Review.dto.ReviewRequestDto;
 import com.example.sofilove.Review.dto.ReviewResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<ReviewResponseDto> createReview(@RequestBody ReviewRequestDto reviewRequestDto){
+    public ResponseEntity<ReviewResponseDto> createReview(@Valid @RequestBody ReviewRequestDto reviewRequestDto){
         ReviewResponseDto reviewResponseDto = reviewService.saveReview(reviewRequestDto);
         return ResponseEntity.ok(reviewResponseDto);
     }
@@ -38,7 +39,7 @@ public class ReviewController {
     }
 
     @PutMapping("/{reviewId}")
-    public ResponseEntity<ReviewResponseDto> updateReview(@PathVariable Long reviewId, @RequestBody ReviewRequestDto reviewRequestDto){
+    public ResponseEntity<ReviewResponseDto> updateReview(@PathVariable Long reviewId, @Valid @RequestBody ReviewRequestDto reviewRequestDto){
         ReviewResponseDto reviewResponseDto = reviewService.updateReview(reviewId, reviewRequestDto);
         return ResponseEntity.ok(reviewResponseDto);
     }

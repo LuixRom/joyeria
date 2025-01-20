@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -19,16 +21,23 @@ public class CategoryController {
     }
 
     @PostMapping
-    private ResponseEntity<CategoryResponseDto> createCategory(@Valid @RequestBody CategoryRequestDto categoryRequestDto) {
+    public ResponseEntity<CategoryResponseDto> createCategory(@Valid @RequestBody CategoryRequestDto categoryRequestDto) {
         CategoryResponseDto categoryResponseDto = categoryService.saveCategory(categoryRequestDto);
-        return ResponseEntity.ok(categoryResponseDto);
+        return ResponseEntity.created(null).body(categoryResponseDto);
     }
 
     @DeleteMapping("/{categoryId}")
-    private ResponseEntity<Void> deleteCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long categoryId) {
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping
+    public ResponseEntity<List<CategoryResponseDto>> getAllCategories() {
+        List<CategoryResponseDto> categoryResponseDtoList = categoryService.getAllCategories();
+        return ResponseEntity.ok(categoryResponseDtoList);
+    }
+
 
     @GetMapping("/{categoryId}")
     private ResponseEntity<CategoryResponseDto> getCategoryById(@PathVariable Long categoryId) {

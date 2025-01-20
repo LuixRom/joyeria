@@ -17,11 +17,12 @@ public class Carrito {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     private Double total = 0.0; // por default en 0 soles
 
 
-    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CarritoItem> items;
 }

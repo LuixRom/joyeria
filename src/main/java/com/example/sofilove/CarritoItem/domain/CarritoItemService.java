@@ -7,6 +7,7 @@ import com.example.sofilove.CarritoItem.dto.CarritoItemResponseDto;
 import com.example.sofilove.CarritoItem.infrastructure.CarritoItemRepository;
 import com.example.sofilove.Product.domain.Product;
 import com.example.sofilove.Product.infrastructure.ProductRepository;
+import com.example.sofilove.exception.ResourceConflict;
 import com.example.sofilove.exception.ResourceNotFound;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -36,6 +37,10 @@ public class CarritoItemService {
         Product product = productRepository.findById(requestDto.getProductId()).
                 orElseThrow(()-> new ResourceNotFound("El producto no existe"));
 
+        if(carritoItemRepository.findByProduct_Id(product.getId()) != null){
+             throw new ResourceConflict("ya existe el producto");
+        }
+
         CarritoItem carritoItem = new CarritoItem();
         carritoItem.setProduct(product);
         carritoItem.setCantidad(requestDto.getCantidad());
@@ -50,8 +55,13 @@ public class CarritoItemService {
         CarritoItem carritoItem= carritoItemRepository.findById(itemId).
                 orElseThrow(()-> new ResourceNotFound("El item no existe"));
 
+        Carrito carrito = carritoRepository.findById(carritoItem.getCarrito().getId()).orElseThrow(()-> new ResourceNotFound("El carrito no existe"));
         carritoItem.setCantidad(nuevaCantidad);
         carritoItem.setSubtotal(carritoItem.getProduct().getPrice() * nuevaCantidad);
+
+        Double total = carrito.getItems().stream().mapToDouble(CarritoItem::getSubtotal).sum();
+        carrito.setTotal(total);
+
         carritoItemRepository.save(carritoItem);
         return modelMapper.map(carritoItem, CarritoItemResponseDto.class);
     }

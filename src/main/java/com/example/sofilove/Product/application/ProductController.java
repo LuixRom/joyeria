@@ -3,6 +3,7 @@ package com.example.sofilove.Product.application;
 import com.example.sofilove.Product.domain.ProductService;
 import com.example.sofilove.Product.dto.ProductRequestDto;
 import com.example.sofilove.Product.dto.ProductResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductRequestDto productRequestDto) {
+    public ResponseEntity<ProductResponseDto> createProduct(@Valid @RequestBody ProductRequestDto productRequestDto) {
         ProductResponseDto productResponseDto = productService.create(productRequestDto);
-        return ResponseEntity.ok(productResponseDto);
+        return ResponseEntity.created(null).body(productResponseDto);
     }
 
     @DeleteMapping("{productId}")
@@ -38,7 +39,7 @@ public class ProductController {
     }
 
     @PutMapping("{productId}")
-    public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long productId, @RequestBody ProductRequestDto productRequestDto) {
+    public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductRequestDto productRequestDto) {
         ProductResponseDto productResponseDto = productService.update(productId, productRequestDto);
         return ResponseEntity.ok(productResponseDto);
     }

@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,8 +25,8 @@ public class Pedido {
     @ManyToOne
     private Usuario usuario;
 
-    @OneToMany
-    private List<PedidoItem> items;
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PedidoItem> items = new ArrayList<>();;
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")

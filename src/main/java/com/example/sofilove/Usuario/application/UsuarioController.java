@@ -4,6 +4,7 @@ package com.example.sofilove.Usuario.application;
 import com.example.sofilove.Usuario.domain.UsuarioService;
 import com.example.sofilove.Usuario.dto.UsuarioRequestDto;
 import com.example.sofilove.Usuario.dto.UsuarioResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,9 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDto> createUser(@RequestBody UsuarioRequestDto usuarioRequestDto) {
+    public ResponseEntity<UsuarioResponseDto> createUser(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
         UsuarioResponseDto usuarioResponseDto = usuarioService.create(usuarioRequestDto);
-        return ResponseEntity.ok(usuarioResponseDto);
+        return ResponseEntity.created(null).body(usuarioResponseDto);
     }
 
     @DeleteMapping("/{userId}")
@@ -39,7 +40,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UsuarioResponseDto> updateUser(@PathVariable Long userId, @RequestBody UsuarioRequestDto usuarioRequestDto) {
+    public ResponseEntity<UsuarioResponseDto> updateUser(@PathVariable Long userId, @Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
         UsuarioResponseDto usuarioResponseDto = usuarioService.update(userId, usuarioRequestDto);
         return ResponseEntity.ok(usuarioResponseDto);
     }

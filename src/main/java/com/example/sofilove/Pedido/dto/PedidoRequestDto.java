@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 public class PedidoRequestDto {
-    private Long carritoId;
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")
@@ -38,10 +37,10 @@ public class PedidoRequestDto {
     private String numero;
 
     @NotBlank(message = "El domicilio no puede estar vacío")
-    private String DomicilioFiscal;
+    private String domicilioFiscal;
 
     @NotNull
-    private String Documento;
+    private String documento;
 
     @NotNull
     private String departamento;
