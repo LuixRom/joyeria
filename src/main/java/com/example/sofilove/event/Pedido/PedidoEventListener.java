@@ -12,10 +12,13 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Component
 public class PedidoEventListener {
-
-
 
     @Autowired
     private JavaMailSender mailSender;
@@ -25,33 +28,59 @@ public class PedidoEventListener {
 
     @Async
     @EventListener
-    public void onPedidoCreado(PedidoCreatedEvent event) throws MessagingException {
+    public void handlePedidoEvent(PedidoEvent event) throws MessagingException {
         Pedido pedido = event.getPedido();
-        sendEmail(pedido.getEmail(), "Pedido Creado", "pedido-request-received", pedido);
-    }
+        String templateName;
+        String subject;
 
-    @Async
-    @EventListener
-    public void onPedidoEnviado(PedidoEnviadoEvent event) throws MessagingException {
-        Pedido pedido = event.getPedido();
-        sendEmail(pedido.getEmail(), "Pedido Enviado", "pedido-request-sent", pedido);
-    }
+        // Identificar el tipo de evento
+        if (event instanceof PedidoCreatedEvent) {
+            templateName = "pedido-created-confirmation";
+            subject = "Pedido Creado";
+        } else if (event instanceof PedidoEnviadoEvent) {
+            templateName = "pedido-enviado-confirmation";
+            subject = "Pedido Enviado";
+        } else if (event instanceof PedidoRechazadoEvent) {
+            templateName = "pedido-rechazado-confirmation";
+            subject = "Pedido Rechazado";
+        } else {
+            throw new IllegalArgumentException("Evento no manejado: " + event.getClass().getSimpleName());
+        }
 
-    @Async
-    @EventListener
-    public void onPedidoFallido(PedidoRechazadoEvent event) throws MessagingException {
-        Pedido pedido = event.getPedido();
-        sendEmail(pedido.getEmail(), "Pedido Fallido", "pedido-request-fallido", pedido);
+        // Enviar el correo
+        sendEmail(pedido.getEmail(), subject, templateName, pedido);
     }
 
     private void sendEmail(String recipientEmail, String subject, String templateName, Pedido pedido) throws MessagingException {
+        // Preparar el contexto para Thymeleaf
         Context context = new Context();
-        context.setVariable("nombreUsuario", pedido.getUsuario().getNombre());
+        context.setVariable("nombreFacturacion", pedido.getNombreFacturacion());
+        context.setVariable("apellido", pedido.getApellido());
+        context.setVariable("phone", pedido.getPhone());
+        context.setVariable("email", pedido.getEmail());
+        context.setVariable("calle", pedido.getCalle());
+        context.setVariable("distrito", pedido.getDistrito());
+        context.setVariable("departamento", pedido.getDepartamento());
         context.setVariable("estadoPedido", pedido.getEstado().toString());
         context.setVariable("total", pedido.getTotal());
+        context.setVariable("fechaPedido", pedido.getFechaPedido());
+        context.setVariable("documento", pedido.getDocumento()); // Agregar el documento al contexto
 
+        // Pasar los items del pedido
+        List<Map<String, Object>> pedidoItems = pedido.getItems().stream().map(item -> {
+            Map<String, Object> itemMap = new HashMap<>();
+            itemMap.put("productName", item.getProducto().getName());
+            itemMap.put("cantidad", item.getCantidad());
+            itemMap.put("subtotal", item.getSubtotal());
+            itemMap.put("imageUrl", item.getProducto().getImagenes());
+            return itemMap;
+        }).collect(Collectors.toList());
+        context.setVariable("pedidoItems", pedidoItems);
+
+        // Procesar el template
         String htmlContent = templateEngine.process(templateName, context);
 
+        // Crear y enviar el correo
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
 
@@ -61,5 +90,4 @@ public class PedidoEventListener {
 
         mailSender.send(message);
     }
-
 }

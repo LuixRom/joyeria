@@ -29,5 +29,4 @@ public class PedidoItem {
     @ManyToOne
     private Product producto;
 
-
 }
