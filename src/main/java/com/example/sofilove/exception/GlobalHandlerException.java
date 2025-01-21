@@ -19,5 +19,8 @@ public class GlobalHandlerException {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
-
+    @ExceptionHandler
+    public ResponseEntity<String> UnauthorizeOperationException(UnauthorizeOperationException e){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
 }

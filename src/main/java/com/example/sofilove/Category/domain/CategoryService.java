@@ -17,7 +17,7 @@ public class CategoryService {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository, ModelMapper modelMapper){
+    public CategoryService(CategoryRepository categoryRepository, ModelMapper modelMapper) {
         this.categoryRepository = categoryRepository;
         this.modelMapper = modelMapper;
     }
@@ -49,7 +49,6 @@ public class CategoryService {
 
     public void deleteCategory(Long id){
         Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFound("Category not found"));
-
         categoryRepository.delete(category);
     }
 

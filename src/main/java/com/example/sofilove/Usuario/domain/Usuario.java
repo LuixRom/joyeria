@@ -8,19 +8,23 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Carrito carrito;
 
 
@@ -38,7 +42,6 @@ public class Usuario {
     private String email;
 
     @NotBlank(message="La contraseña no puede estar vacía")
-    @Size(min=8, max=20, message="La contraseña debe tener como mínimo 8 caracteres")
     private String password;
 
     @NotBlank(message = "El número de celular no puede estar vacío")
@@ -65,4 +68,20 @@ public class Usuario {
             this.role=Role.CLIENTE;
         }
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name())); // Ajusta según cómo manejas los roles
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
 }

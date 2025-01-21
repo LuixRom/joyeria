@@ -50,4 +50,10 @@ public class UsuarioController {
         List<UsuarioResponseDto> users = usuarioService.getAllUsers();
         return ResponseEntity.ok(users);
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UsuarioResponseDto> getMyInfo() {
+        UsuarioResponseDto usuarioInfo = usuarioService.getUsuarioOwnInfo();
+        return ResponseEntity.ok(usuarioInfo);
+    }
 }

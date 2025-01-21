@@ -34,4 +34,10 @@ public class CarritoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<CarritoResponseDto> getMe() {
+        CarritoResponseDto carrito =  carritoService.getCarritoMe();
+        return ResponseEntity.ok(carrito);
+    }
+
 }

@@ -7,8 +7,10 @@ import com.example.sofilove.CarritoItem.dto.CarritoItemResponseDto;
 import com.example.sofilove.CarritoItem.infrastructure.CarritoItemRepository;
 import com.example.sofilove.Product.domain.Product;
 import com.example.sofilove.Product.infrastructure.ProductRepository;
+import com.example.sofilove.auth.utils.AuthorizationUtils;
 import com.example.sofilove.exception.ResourceConflict;
 import com.example.sofilove.exception.ResourceNotFound;
+import com.example.sofilove.exception.UnauthorizeOperationException;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +23,15 @@ public class CarritoItemService {
     private final CarritoRepository carritoRepository;
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+    private final AuthorizationUtils authorizationUtils;
 
     @Autowired
-    public CarritoItemService(CarritoItemRepository carritoItemRepository, CarritoRepository carritoRepository, ProductRepository productRepository, ModelMapper modelMapper) {
+    public CarritoItemService(AuthorizationUtils authorizationUtils ,CarritoItemRepository carritoItemRepository, CarritoRepository carritoRepository, ProductRepository productRepository, ModelMapper modelMapper) {
         this.carritoItemRepository = carritoItemRepository;
         this.carritoRepository = carritoRepository;
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
+        this.authorizationUtils = authorizationUtils;
     }
 
     public CarritoItemResponseDto addItemCarrito(Long carritoId, CarritoItemRequestDto requestDto) {
@@ -37,8 +41,13 @@ public class CarritoItemService {
         Product product = productRepository.findById(requestDto.getProductId()).
                 orElseThrow(()-> new ResourceNotFound("El producto no existe"));
 
+
         if(carritoItemRepository.findByProduct_Id(product.getId()) != null){
              throw new ResourceConflict("ya existe el producto");
+        }
+
+        if (!authorizationUtils.isAdminOrResourceOwner(carrito.getUsuario().getId())) {
+            throw new UnauthorizeOperationException("You do not have permission to add a carrito.");
         }
 
         CarritoItem carritoItem = new CarritoItem();
@@ -57,6 +66,11 @@ public class CarritoItemService {
 
         Carrito carrito = carritoRepository.findById(carritoItem.getCarrito().getId()).orElseThrow(()-> new ResourceNotFound("El carrito no existe"));
         carritoItem.setCantidad(nuevaCantidad);
+
+        if (!authorizationUtils.isAdminOrResourceOwner(carrito.getUsuario().getId())) {
+            throw new UnauthorizeOperationException("You do not have permission to update this item.");
+        }
+
         carritoItem.setSubtotal(carritoItem.getProduct().getPrice() * nuevaCantidad);
 
         Double total = carrito.getItems().stream().mapToDouble(CarritoItem::getSubtotal).sum();
@@ -69,6 +83,11 @@ public class CarritoItemService {
     public void deleteItemCarrito(Long itemId) {
         CarritoItem carritoItem = carritoItemRepository.findById(itemId).
                 orElseThrow(()-> new ResourceNotFound("El item no existe"));
+
+        if (!authorizationUtils.isAdminOrResourceOwner(carritoItem.getCarrito().getUsuario().getId())) {
+            throw new UnauthorizeOperationException("You do not have permission to delete this carrito.");
+        }
+
         carritoItemRepository.deleteById(carritoItem.getId());
     }
 
