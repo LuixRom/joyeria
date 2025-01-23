@@ -12,7 +12,7 @@ import com.example.sofilove.Usuario.domain.Usuario;
 import com.example.sofilove.Usuario.infrastructure.UsuarioRepository;
 import com.example.sofilove.auth.utils.AuthorizationUtils;
 import com.example.sofilove.event.Pedido.PedidoCreatedEvent;
-import com.example.sofilove.event.Pedido.PedidoEnviadoEvent;
+import com.example.sofilove.event.Pedido.PedidoConfirmadoEvent;
 import com.example.sofilove.event.Pedido.PedidoRechazadoEvent;
 import com.example.sofilove.exception.ResourceNotFound;
 import com.example.sofilove.exception.UnauthorizeOperationException;
@@ -79,7 +79,7 @@ public class PedidoService {
         return modelMapper.map(pedido, PedidoResponseDto.class);
     }
 
-    public PedidoResponseDto enviarPedido(Long id) {
+    public PedidoResponseDto confirmarPedido(Long id) {
         Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new ResourceNotFound("Pedido not found"));
 
         if (pedido.getEstado() != Estado.PENDIENTE) {
@@ -90,7 +90,7 @@ public class PedidoService {
         pedidoRepository.save(pedido);
 
         // Publicar evento de envío de pedido
-        eventPublisher.publishEvent(new PedidoEnviadoEvent(this, pedido));
+        eventPublisher.publishEvent(new PedidoConfirmadoEvent(this, pedido));
 
         return modelMapper.map(pedido, PedidoResponseDto.class);
     }

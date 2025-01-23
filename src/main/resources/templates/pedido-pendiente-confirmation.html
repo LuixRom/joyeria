@@ -71,6 +71,25 @@
         .social-icons img:hover {
             transform: scale(1.1);
         }
+
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #e63946;
+        }
+
+        .whatsapp-link img {
+            width: 24px;
+            height: 24px;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-link img:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -82,6 +101,7 @@
     <p>Hola <span class="highlight" th:text="${nombreFacturacion}">Nombre del Usuario</span>,</p>
     <p>Gracias por tu pedido. Aquí tienes los detalles:</p>
 
+    <p><strong>Número de Pedido:</strong> <span class="highlight" th:text="'PED-' + ${id}">PED-1</span></p>
     <p><strong>Estado del Pedido:</strong> <span class="highlight" th:text="${estadoPedido}">Pendiente</span></p>
     <p><strong>Total:</strong> S/ <span th:text="${total}">0.00</span></p>
     <p><strong>Fecha del Pedido:</strong> <span th:text="${fechaPedido}">Fecha</span></p>
@@ -95,7 +115,7 @@
             </div>
             <div>
                 <p>Subtotal: S/ <span th:text="${item.subtotal}">0.00</span></p>
-                <img th:src="${item.imageUrl}" alt="Producto" style="width: 50px; height: 50px; border-radius: 5px;">
+                <img th:src="${item.imageUrl}" alt="Producto">
             </div>
         </div>
     </div>
@@ -105,6 +125,14 @@
         <span th:text="${calle}">Calle</span>,
         <span th:text="${distrito}">Distrito</span>,
         <span th:text="${departamento}">Departamento</span>
+    </p>
+
+    <p><strong>Cualquier duda o consulta:</strong></p>
+    <p>Ante cualquier cambio o duda puedes comunicarte con nosotros a través de WhatsApp y enviarnos tu número de pedido:
+        <a class="whatsapp-link" href="https://api.whatsapp.com/send?phone=+51951076244&text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n">
+            Contáctanos
+            <img src="https://res.cloudinary.com/dgsuts57l/image/upload/v1737252212/whatssap-new_xvud6f.png" alt="WhatsApp">
+        </a>
     </p>
 
     <div class="footer">
@@ -124,3 +152,4 @@
 </div>
 </body>
 </html>
+
