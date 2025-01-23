@@ -50,7 +50,6 @@ public class CarritoService {
 
         if (!authorizationUtils.isAdminOrResourceOwner(carrito.getUsuario().getId())) {
             throw new UnauthorizeOperationException("You do not have permission to empty this carrito.");
-
         }
 
         carrito.getItems().clear();

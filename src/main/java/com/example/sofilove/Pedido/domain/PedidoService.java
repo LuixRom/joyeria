@@ -52,6 +52,10 @@ public class PedidoService {
         Usuario usuario = usuarioRepository.findById(userId).orElseThrow(() -> new ResourceNotFound("usuario not found"));
         Carrito carrito = usuario.getCarrito();
 
+        if(carrito.getTotal() == 0){
+            throw new RuntimeException("carrito vacio");
+        }
+
         Pedido pedido = modelMapper.map(pedidoRequestDto, Pedido.class);
         pedido.setEstado(Estado.PENDIENTE);
         pedido.setTotal(carrito.getTotal());

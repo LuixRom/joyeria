@@ -51,4 +51,16 @@ public class PedidoController {
         return ResponseEntity.ok(pedidos);
     }
 
+    @PostMapping("/{pedidoId}/confirmar")
+    public ResponseEntity<PedidoResponseDto> confirmarPedido(@PathVariable Long pedidoId) {
+        PedidoResponseDto pedido = pedidoService.confirmarPedido(pedidoId);
+        return ResponseEntity.ok(pedido);
+    }
+
+    @PostMapping("{pedidoId}/fallido")
+    public ResponseEntity<PedidoResponseDto> rechazarPedido(@PathVariable Long pedidoId) {
+        PedidoResponseDto pedido = pedidoService.marcarComoFallido(pedidoId);
+        return ResponseEntity.ok(pedido);
+    }
+
 }
