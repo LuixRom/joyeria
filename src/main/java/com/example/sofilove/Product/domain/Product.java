@@ -32,12 +32,12 @@ public class Product {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "product_colors", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "color")
-    private List<String> colors;
+    private List<String> colores;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "product_fabrics", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "fabric")
-    private List<String> fabrics;
+    private List<String> telas;
 
     @NotNull(message = "El precio no puede estar vacío")
     @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")

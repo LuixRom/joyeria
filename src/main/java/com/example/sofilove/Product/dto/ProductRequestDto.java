@@ -19,9 +19,6 @@ public class ProductRequestDto {
     @Size(max=500, message = "La descripcion debe de tener como máximo 500 caracteres")
     private String description;
 
-    @NotBlank(message = "El color no debe de estar vacio")
-    @Size(max=20, message = "El color debe de tener como máximo 20 caracteres")
-    private String color;
 
     @NotNull(message = "El precio no puede estar vacío")
     @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")
@@ -49,4 +46,8 @@ public class ProductRequestDto {
     private Boolean isDiscount;
 
     private Integer descuento;
+
+    private List<String> colores;
+
+    private List<String> telas;
 }
