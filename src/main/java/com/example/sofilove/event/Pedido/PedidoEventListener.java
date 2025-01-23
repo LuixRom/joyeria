@@ -35,10 +35,10 @@ public class PedidoEventListener {
 
         // Identificar el tipo de evento
         if (event instanceof PedidoCreatedEvent) {
-            templateName = "pedido-created-confirmation";
+            templateName = "pedido-pendiente-confirmation";
             subject = "Pedido Creado";
         } else if (event instanceof PedidoConfirmadoEvent) {
-            templateName = "pedido-enviado-confirmation";
+            templateName = "pedido-confirmado-confirmation";
             subject = "Pedido Enviado";
         } else if (event instanceof PedidoRechazadoEvent) {
             templateName = "pedido-rechazado-confirmation";
