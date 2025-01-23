@@ -73,8 +73,10 @@ public class SecurityConfig {
 
                         // Acceso de pedido
                         .requestMatchers(HttpMethod.POST, "/pedido/**").hasAuthority("CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/pedido/me").hasAuthority("CLIENTE")
                         .requestMatchers(HttpMethod.GET, "/pedido/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/pedido/**").hasAuthority("ADMIN")
+
 
                         // Acceso de pedidoItem
                         .requestMatchers(HttpMethod.GET, "/pedidoItem/**").hasAuthority("ADMIN")

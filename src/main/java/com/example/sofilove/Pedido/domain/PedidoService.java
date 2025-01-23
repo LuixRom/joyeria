@@ -19,6 +19,8 @@ import com.example.sofilove.exception.UnauthorizeOperationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -84,7 +86,7 @@ public class PedidoService {
             throw new IllegalArgumentException("El pedido debe estar en estado PENDIENTE para ser enviado.");
         }
 
-        pedido.setEstado(Estado.ENVIADO);
+        pedido.setEstado(Estado.CONFIRMADO);
         pedidoRepository.save(pedido);
 
         // Publicar evento de envío de pedido
@@ -119,5 +121,25 @@ public class PedidoService {
     public void deletePedido(Long id) {
         Pedido pedido = pedidoRepository.findById(id).orElseThrow(()-> new ResourceNotFound("Pedido not found"));
         pedidoRepository.delete(pedido);
+    }
+
+    public List<PedidoResponseDto> getMePedidos(){
+        // Obtener el principal del contexto de seguridad (usuario autenticado)
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String email;
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails) principal).getUsername();  // Obtener el email del principal
+        } else {
+            throw new RuntimeException("No autorizado para esta operación");
+        }
+
+        // Buscar al usuario en la base de datos utilizando el email
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFound("User not found"));
+
+        List<Pedido> pedidos= pedidoRepository.findByUsuario_Id(usuario.getId());
+
+        return pedidos.stream().map(pedido -> modelMapper.map(pedido, PedidoResponseDto.class)).toList();
     }
 }

@@ -41,13 +41,13 @@ public class CarritoItemService {
         Product product = productRepository.findById(requestDto.getProductId()).
                 orElseThrow(()-> new ResourceNotFound("El producto no existe"));
 
-
-        if(carritoItemRepository.findByProduct_Id(product.getId()) != null){
-             throw new ResourceConflict("ya existe el producto");
-        }
-
         if (!authorizationUtils.isAdminOrResourceOwner(carrito.getUsuario().getId())) {
             throw new UnauthorizeOperationException("You do not have permission to add a carrito.");
+        }
+
+
+        if (carritoItemRepository.findByCarrito_IdAndProduct_Id(carrito.getId(), product.getId()).isPresent()) {
+            throw new ResourceConflict("Este producto ya está en el carrito.");
         }
 
         CarritoItem carritoItem = new CarritoItem();
