@@ -17,11 +17,12 @@ import java.util.List;
 public class ProductResponseDto {
     private String name;
     private String description;
-    private String color;
     private Double price;
     private Integer stock;
     private String categoryName;
     private Integer descuento;
     private List<String> imagenes;
+    private List<String> colores;
+    private List<String> telas;
 }
 
