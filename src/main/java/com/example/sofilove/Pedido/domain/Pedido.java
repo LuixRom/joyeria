@@ -5,6 +5,7 @@ import com.example.sofilove.Carrito.domain.Carrito;
 import com.example.sofilove.CarritoItem.domain.CarritoItem;
 import com.example.sofilove.PedidoItem.domain.PedidoItem;
 import com.example.sofilove.Usuario.domain.Usuario;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -75,6 +76,7 @@ public class Pedido {
     @DecimalMin(value = "0.0", inclusive = true, message = "El total debe ser mayor o igual a 0")
     private Double total;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaPedido;
 
     @Enumerated(EnumType.STRING)

@@ -27,6 +27,13 @@ public class UsuarioController {
         return ResponseEntity.created(null).body(usuarioResponseDto);
     }
 
+
+    @PostMapping("/create-admin")
+    public ResponseEntity<UsuarioResponseDto> createAdmin(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
+        UsuarioResponseDto usuarioResponseDto = usuarioService.createAdmin(usuarioRequestDto);
+        return ResponseEntity.ok(usuarioResponseDto);
+    }
+
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
         usuarioService.delete(userId);
@@ -56,4 +63,5 @@ public class UsuarioController {
         UsuarioResponseDto usuarioInfo = usuarioService.getUsuarioOwnInfo();
         return ResponseEntity.ok(usuarioInfo);
     }
+
 }

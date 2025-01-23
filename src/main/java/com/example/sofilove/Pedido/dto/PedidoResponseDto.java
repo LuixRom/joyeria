@@ -1,5 +1,6 @@
 package com.example.sofilove.Pedido.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -24,5 +25,6 @@ public class PedidoResponseDto {
     private String estado;
     private Double total;
     private String Documento;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaPedido;
 }

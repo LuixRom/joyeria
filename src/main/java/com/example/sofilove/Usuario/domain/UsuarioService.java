@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,15 +29,17 @@ public class UsuarioService {
     private final CarritoRepository carritoRepository;
     private final ModelMapper modelMapper;
     private final AuthorizationUtils authorizationUtils;
+    PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public UsuarioService(AuthorizationUtils authorizationUtils,UsuarioRepository usuarioRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher, CarritoRepository carritoRepository) {
+    public UsuarioService(AuthorizationUtils authorizationUtils,UsuarioRepository usuarioRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher, CarritoRepository carritoRepository, PasswordEncoder passwordEncoder) {
         this.eventPublisher = eventPublisher;
         this.usuarioRepository = usuarioRepository;
         this.modelMapper = modelMapper;
         this.carritoRepository = carritoRepository;
         this.authorizationUtils = authorizationUtils;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UsuarioResponseDto create(UsuarioRequestDto usuarioRequestDto) {
@@ -95,23 +98,41 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDto getUsuarioOwnInfo() {
-        // Obtener el principal del contexto de seguridad (usuario autenticado)
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         String email;
         if (principal instanceof UserDetails) {
-            email = ((UserDetails) principal).getUsername();  // Obtener el email del principal
+            email = ((UserDetails) principal).getUsername();
         } else {
             throw new UnauthorizeOperationException("No autorizado para esta operación");
         }
 
-        // Buscar al usuario en la base de datos utilizando el email
+
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFound("Usuario no encontrado"));
 
-        // Devolver la información del usuario mapeada al DTO de respuesta
         return modelMapper.map(usuario, UsuarioResponseDto.class);
     }
 
+    public UsuarioResponseDto createAdmin(UsuarioRequestDto usuarioRequestDto) {
+        if (usuarioRepository.existsByEmail(usuarioRequestDto.getEmail())) {
+            throw new ResourceConflict("El email ya existe");
+        }
 
+        Usuario usuario = new Usuario();
+        modelMapper.map(usuarioRequestDto, usuario);
+
+
+        usuario.setPassword(passwordEncoder.encode(usuarioRequestDto.getPassword()));
+        usuario.setRole(Role.ADMIN);
+
+        usuarioRepository.save(usuario);
+
+        usuarioRepository.save(usuario);
+
+        return modelMapper.map(usuario, UsuarioResponseDto.class);
+    }
 }
+
+
+

@@ -29,9 +29,15 @@ public class Product {
     @Size(max=500, message = "La descripcion debe de tener como máximo 500 caracteres")
     private String description;
 
-    @NotBlank(message = "El color no debe de estar vacio")
-    @Size(max=20, message = "El color debe de tener como máximo 20 caracteres")
-    private String color;
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "product_colors", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "color")
+    private List<String> colors;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "product_fabrics", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "fabric")
+    private List<String> fabrics;
 
     @NotNull(message = "El precio no puede estar vacío")
     @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")
