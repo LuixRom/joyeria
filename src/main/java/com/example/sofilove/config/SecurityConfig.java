@@ -97,7 +97,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/user/{userId}").hasAuthority("CLIENTE")
                         .requestMatchers(HttpMethod.GET, "/user/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/user/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/product/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/user/**").hasAuthority("CLIENTE")
                         .requestMatchers(HttpMethod.POST, "/user/create-admin").hasAuthority("ADMIN")
 
 

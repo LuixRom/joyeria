@@ -37,6 +37,12 @@ public class ProductRequestDto {
     private List<String> imagenes; // Nombre o clave del archivo en S3
 
     @NotNull
+    private List<String> fabrics;
+
+    @NotNull
+    private List<String> colors;;
+
+    @NotNull
     private Long categoryId;
 
     @NotNull

@@ -34,7 +34,7 @@ public class ProductService {
         Product product = new Product();
         product.setName(productRequestDto.getName());
         product.setDescription(productRequestDto.getDescription());
-        product.setColor(productRequestDto.getColor());
+        product.setColors(productRequestDto.getColor());
         product.setPrice(productRequestDto.getPrice());
         product.setStock(productRequestDto.getStock());
         product.setIsDiscount(productRequestDto.getIsDiscount());
