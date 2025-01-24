@@ -1,5 +1,7 @@
 package com.example.sofilove.Pedido.dto;
 
+import com.example.sofilove.Pedido.domain.Estado;
+import com.example.sofilove.PedidoItem.dto.PedidoItemResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,9 +24,11 @@ public class PedidoResponseDto {
     private String distrito;
     private String calle;
     private String email;
-    private String estado;
+    private Estado estado;
     private Double total;
     private String Documento;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaPedido;
+    private List<PedidoItemResponseDto> pedidoItems;
+
 }

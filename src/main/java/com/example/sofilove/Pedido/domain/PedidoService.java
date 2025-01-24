@@ -7,6 +7,7 @@ import com.example.sofilove.Pedido.dto.PedidoRequestDto;
 import com.example.sofilove.Pedido.dto.PedidoResponseDto;
 import com.example.sofilove.Pedido.infrastructure.PedidoRepository;
 import com.example.sofilove.PedidoItem.domain.PedidoItem;
+import com.example.sofilove.PedidoItem.dto.PedidoItemResponseDto;
 import com.example.sofilove.PedidoItem.infrastructure.PedidoItemRepository;
 import com.example.sofilove.Usuario.domain.Usuario;
 import com.example.sofilove.Usuario.infrastructure.UsuarioRepository;
@@ -49,10 +50,11 @@ public class PedidoService {
     }
 
     public PedidoResponseDto crearPedido(Long userId, PedidoRequestDto pedidoRequestDto) {
-        Usuario usuario = usuarioRepository.findById(userId).orElseThrow(() -> new ResourceNotFound("usuario not found"));
+        Usuario usuario = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFound("usuario not found"));
         Carrito carrito = usuario.getCarrito();
 
-        if(carrito.getTotal() == 0){
+        if (carrito.getTotal() == 0) {
             throw new RuntimeException("carrito vacio");
         }
 
@@ -74,13 +76,35 @@ public class PedidoService {
             pedidoItem.setPedido(pedido);
             return pedidoItem;
         }).toList();
+
         pedidoItemRepository.saveAll(pedidoItems);
+
+
+
+        // Mapeo manual de PedidoItem a PedidoItemResponseDto
+        List<PedidoItemResponseDto> pedidoItemResponseDtoList = pedidoItems.stream().map(item -> {
+            PedidoItemResponseDto dto = new PedidoItemResponseDto();
+            dto.setProductId(item.getProducto().getId());
+            dto.setProductName(item.getProducto().getName());
+            dto.setCantidad(item.getCantidad());
+            dto.setSubtotal(item.getSubtotal());
+
+            // Obtener la primera imagen si la lista no está vacía
+            List<String> imagenes = item.getProducto().getImagenes();
+            return dto;
+        }).toList();
 
         carritoService.emptyCarrito(carrito.getId());
 
         eventPublisher.publishEvent(new PedidoCreatedEvent(this, pedido));
 
-        return modelMapper.map(pedido, PedidoResponseDto.class);
+        // Crear y devolver el PedidoResponseDto con los items mapeados manualmente
+        PedidoResponseDto pedidoResponseDto = modelMapper.map(pedido, PedidoResponseDto.class);
+        pedidoResponseDto.setPedidoItems(pedidoItemResponseDtoList);
+        pedidoResponseDto.setEstado(pedido.getEstado());
+        pedidoResponseDto.setTotal(pedido.getTotal());
+
+        return pedidoResponseDto;
     }
 
     public PedidoResponseDto confirmarPedido(Long id) {

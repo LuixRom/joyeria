@@ -27,7 +27,7 @@ public class Pedido {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PedidoItem> items = new ArrayList<>();;
+    private List<PedidoItem> items = new ArrayList<>();
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max=50,message= "El nombre no puede tener más de 50 caracteres")
@@ -88,7 +88,7 @@ public class Pedido {
     @PrePersist
     private void prePersist() {
         if (this.fechaPedido == null) {
-            this.fechaPedido = LocalDateTime.now();
+            this.fechaPedido = LocalDateTime.now().withNano(0);
         }
 
         if (this.pais == null) {

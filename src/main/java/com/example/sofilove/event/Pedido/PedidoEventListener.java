@@ -1,6 +1,8 @@
 package com.example.sofilove.event.Pedido;
 
 import com.example.sofilove.Pedido.domain.Pedido;
+import com.example.sofilove.PedidoItem.domain.PedidoItem;
+import com.example.sofilove.PedidoItem.infrastructure.PedidoItemRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.thymeleaf.context.Context;
@@ -12,6 +14,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +28,9 @@ public class PedidoEventListener {
 
     @Autowired
     private TemplateEngine templateEngine;
+
+    @Autowired
+    private PedidoItemRepository pedidoItemRepository;
 
     @Async
     @EventListener
@@ -65,17 +71,27 @@ public class PedidoEventListener {
         context.setVariable("total", pedido.getTotal());
         context.setVariable("fechaPedido", pedido.getFechaPedido());
         context.setVariable("documento", pedido.getDocumento()); // Agregar el documento al contexto
+        context.setVariable("id", pedido.getId());
+        // Obtener la lista de PedidoItem a través del repositorio
+        List<PedidoItem> pedidoItems = pedidoItemRepository.findByPedido_Id(pedido.getId());
 
-        // Pasar los items del pedido
-        List<Map<String, Object>> pedidoItems = pedido.getItems().stream().map(item -> {
+// Crear una lista de Map para los items del pedido
+        List<Map<String, Object>> pedidoItemsList = new ArrayList<>();
+
+// Recorrer cada PedidoItem y mapear sus datos manualmente
+        for (PedidoItem item : pedidoItems) {
             Map<String, Object> itemMap = new HashMap<>();
             itemMap.put("productName", item.getProducto().getName());
             itemMap.put("cantidad", item.getCantidad());
             itemMap.put("subtotal", item.getSubtotal());
-            itemMap.put("imageUrl", item.getProducto().getImagenes());
-            return itemMap;
-        }).collect(Collectors.toList());
-        context.setVariable("pedidoItems", pedidoItems);
+            itemMap.put("imageUrl", item.getProducto().getImagenes().get(0));
+
+            // Añadir el mapa a la lista
+            pedidoItemsList.add(itemMap);
+        }
+
+// Establecer la variable de items del pedido en el contexto
+        context.setVariable("pedidoItems", pedidoItemsList);
 
         // Procesar el template
         String htmlContent = templateEngine.process(templateName, context);
